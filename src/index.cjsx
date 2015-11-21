@@ -1,8 +1,8 @@
 React = require 'react'
 ReactDOM = require 'react-dom'
 
-HelloWorld = React.createClass
-  render: ->
-    <div>Hello World!</div>
+Root = require './root'
 
-ReactDOM.render <HelloWorld />, document.getElementById('hello-world')
+RootEl = document.getElementById('root')
+
+ReactDOM.render <Root />, RootEl

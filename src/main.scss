@@ -6,11 +6,29 @@
   flex-direction: column;
   display: flex;
 }
+.switchbutton {
+  margin-right: 20px;
+}
 .assignmentgroup-container {
   display: flex;
   flex-direction: row;
   margin-left: auto;
   margin-rght: auto;
+}
+.assignment-title {
+  font-size: 150%;
+  font-weight: 100;
+  margin: 5px 0px;
+}
+.assignment-count {
+  font-size: 200%;
+  font-weight: 100;
+  margin: 5px 0px;
+}
+.assignment-count-box {
+  width: 14%;
+  border-left: #ccc solid 1px;
+  padding-left: 10px;
 }
 .classgroup-container {
   display: flex;

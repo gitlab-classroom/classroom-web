@@ -13,7 +13,7 @@ ClassCard = React.createClass
   render: ->
     <div className="class-card">
       <Card>
-        <CardTitle className="class-title" style={height: 80, backgroundColor: @props.color} title={@props.class} subtitle={@props.teacher}>
+        <CardTitle className="class-title" style={height: 80, backgroundColor: @props.color} title={@props.class} subtitle={@props.year}>
         </CardTitle>
         <CardText style={display: 'flex'}>
           <div style={width: 'calc(100% - 40px)'}>
@@ -28,24 +28,28 @@ ClassGroup = React.createClass
     <div className="classgroup-container">
       <ClassCard class="Minecraft"
                  teacher="notch"
+                 year="2013 Summer"
                  description="Barfoo!"
                  color="#1E88E5"
-                 avatar="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+                 avatar="../assets/user.jpg"/>
       <ClassCard class="Starcraft"
                  teacher="Huang Xudong"
+                 year="2012 Spring"
                  description="Dog vs Dog"
                  color="#D81B60"
-                 avatar="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+                 avatar="../assets/user.jpg"/>
       <ClassCard class="Fallout 4"
                  teacher="AwesomeFace"
+                 year="2015 Fall"
                  description="Rubbish Everywhere"
                  color="#43A047"
-                 avatar="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+                 avatar="../assets/user.jpg"/>
       <ClassCard class="KanColle"
                  teacher="Yamato"
-                 description="46inch Triple Gun Mount"
+                 year="1944 Fall"
+                 description="6inch Triple Gun Mount"
                  color="#FF9800"
-                 avatar="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+                 avatar="../assets/user.jpg"/>
 
   </div>
 module.exports = ClassGroup

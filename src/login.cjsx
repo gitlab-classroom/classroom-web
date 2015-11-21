@@ -10,10 +10,19 @@ RaisedButton = require('material-ui/lib/raised-button');
 Login = React.createClass
   render: ->
     <div className="login-middle">
+      <div className="login-middle" style={display: 'flex'}>
+        <img className="login-middle login-logo" src="../assets/gitlab.png"/>
+      </div>
+      <div className="login-middle login-title">
+        Gitlab Classroom
+      </div>
+      <div className="login-middle login-subtitle">
+        Sign in with your Gitlab account
+      </div>
       <Card className="login-dialog">
         <CardText style={display: 'flex'}>
           <div className="login-container">
-            <Avatar size={120} className="login-middle" src="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+            <Avatar size={96} className="login-middle" src="../assets/user.jpg"/>
             <TextField
               hintText="Username" />
             <TextField
@@ -22,7 +31,7 @@ Login = React.createClass
         </CardText>
         <CardActions>
           <div style={width: '100%'}>
-            <RaisedButton secondary={true} style={width: '100%'} label="Login"/>
+            <RaisedButton className='login-confirm' secondary={true} style={width: '100%'} label="Login"/>
           </div>
         </CardActions>
       </Card>

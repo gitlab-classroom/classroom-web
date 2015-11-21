@@ -1,6 +1,5 @@
 React = require 'react'
 ReactDOM = require 'react-dom'
-{StyleSheet} = React
 Card = require('material-ui/lib/card/card');
 CardActions = require('material-ui/lib/card/card-actions');
 CardText = require('material-ui/lib/card/card-text');

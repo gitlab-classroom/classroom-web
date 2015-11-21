@@ -3,7 +3,7 @@ React = require 'react'
 History = require 'history'
 DocumentTitle = require 'react-document-title'
 
-LoginPage = require './login'
+LoginPage = require './pages/login'
 
 App = React.createClass
   render: ->

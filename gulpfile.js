@@ -3,6 +3,9 @@ var webserver = require('gulp-webserver');
 var cjsx = require('gulp-cjsx');
 var browserify = require('browserify')
 var source = require('vinyl-source-stream');
+var addsrc = require('gulp-add-src');
+var concat = require('gulp-concat');
+var sass = require('gulp-sass');
 
 gulp.task('webserver', function() {
   return gulp.src('.')
@@ -19,26 +22,45 @@ gulp.task('webserver', function() {
 });
 
 var paths = {
-  js: 'src/**/*.cjsx'
+  js: 'src/**/*.cjsx',
+  css: 'src/**/*.scss',
+  assets: 'assets/**/*'
 }
 
 gulp.task('compile', function(done) {
-  return gulp.src(paths.js)
-  .pipe(cjsx({bare: true}).on('error', function(e) {console.log(e)}))
-  .pipe(gulp.dest('./dist/'))
-})
-
-gulp.task('browserify', ['compile'], function(done) {
-  return browserify('./dist/index.js')
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(gulp.dest('dist'))
+  return browserify({
+    entries: 'src/index.cjsx',
+    transform: ['coffee-reactify'],
+    extensions: ['.cjsx']
+  })
+   .bundle()
+   .pipe(source('app.js'))
+   .pipe(addsrc('lib/*'))
+   .pipe(gulp.dest('./classroom'));
 });
 
-gulp.task('watch', ['browserify'], function() {
-  gulp.watch(paths.js, function() {
-    gulp.start('browserify');
-  });
+gulp.task('sass', function () {
+  return gulp.src(paths.css)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest('./classroom'));
+});
+
+gulp.task('assets', function() {
+  return gulp.src(paths.assets)
+    .pipe(gulp.dest('./classroom/assets'));
 })
 
-gulp.task('default', ['webserver', 'watch']);
+gulp.task('watch', ['compile', 'sass', 'assets'], function() {
+  gulp.watch(paths.js, function() {
+    gulp.start('compile');
+  });
+  gulp.watch(paths.css, function() {
+    gulp.start('sass');
+  });
+  gulp.watch(paths.assets, function() {
+    gulp.start('assets');
+  })
+})
+
+gulp.task('default', ['watch', 'webserver']);

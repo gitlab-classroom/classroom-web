@@ -9,73 +9,23 @@ CardText = require('material-ui/lib/card/card-text');
 CardTitle = require('material-ui/lib/card/card-title');
 Avatar = require('material-ui/lib/avatar');
 
-ClassStyles =
-  container:
-    display: 'flex'
-    flexDirection: 'row'
-    flexWrap: 'wrap'
-    justifyContent: 'flex-start';
-    marginLeft: 'auto'
-    marginRight: 'auto'
-  middle:
-    marginLeft: 'auto'
-    marginRight: 'auto'
-  avatar:
-    marginLeft: 'auto'
-    marginRight: 0
-    marginTop: -40
-    zIndex: 10
-    width: 38
-    height: 38
-
 ClassCard = React.createClass
   render: ->
     <div className="class-card">
       <Card>
-        <CardTitle className="class-title" style={height: 80, backgroundColor: @props.color, color: '#FFF !important'} title={@props.class} subtitle={@props.teacher}>
+        <CardTitle className="class-title" style={height: 80, backgroundColor: @props.color} title={@props.class} subtitle={@props.teacher}>
         </CardTitle>
         <CardText style={display: 'flex'}>
           <div style={width: 'calc(100% - 40px)'}>
             {@props.description}
           </div>
-          <Avatar style={ClassStyles.avatar} src={@props.avatar}/>
+          <Avatar className="classgroup-avatar" src={@props.avatar}/>
         </CardText>
       </Card>
     </div>
-Class = React.createClass
+ClassGroup = React.createClass
   render: ->
-    <div style={ClassStyles.container}>
-      <style>{"
-        .class-title span {
-          color: #FFF !important;
-        }
-        .class-title span {
-          color: #FFF !important;
-        }
-        .class-card {
-          padding: 10px;
-        }\
-        @media (min-width: 980px) {
-          .class-card {
-            width: calc(25% - 20px);
-          }
-        }
-        @media (min-width: 768px) and (max-width: 979px) {
-          .class-card {
-            width: calc(33% - 20px);
-          }
-        }
-        @media (min-width: 384px) and (max-width: 767px) {
-          .class-card {
-            width: calc(50% - 20px);
-          }
-        }
-        @media (max-width: 383px) {
-          .class-card {
-            width: calc(100% - 20px);
-          }
-        }
-      "}</style>
+    <div className="classgroup-container">
       <ClassCard class="Minecraft"
                  teacher="notch"
                  description="Barfoo!"
@@ -98,4 +48,4 @@ Class = React.createClass
                  avatar="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
 
   </div>
-module.exports = Class
+module.exports = ClassGroup

@@ -7,28 +7,13 @@ TextField = require('material-ui/lib/text-field');
 Avatar = require('material-ui/lib/avatar');
 RaisedButton = require('material-ui/lib/raised-button');
 
-LoginStyles =
-  dialog:
-    width: 300
-    padding: 8
-    marginLeft: 'auto'
-    marginRight: 'auto'
-  container:
-    display: 'flex'
-    flexDirection: 'column'
-    marginLeft: 'auto'
-    marginRight: 'auto'
-  middle:
-    marginLeft: 'auto'
-    marginRight: 'auto'
-
 Login = React.createClass
   render: ->
-    <div style={LoginStyles.middle}>
-      <Card style={LoginStyles.dialog}>
+    <div className="login-middle">
+      <Card className="login-dialog">
         <CardText style={display: 'flex'}>
-          <div style={LoginStyles.container}>
-            <Avatar size={120} style={LoginStyles.middle} src="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
+          <div className="login-container">
+            <Avatar size={120} className="login-middle" src="https://lh5.googleusercontent.com/-pPtKOoDHltQ/VAhTkG_hh7I/AAAAAAAAFQI/_S_aYZZp8B0/s524-no/anime_wallpaper_Kantai_Collection_yahagi-Yarai-1163781.png"/>
             <TextField
               hintText="Username" />
             <TextField

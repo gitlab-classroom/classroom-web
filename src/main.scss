@@ -1,3 +1,17 @@
+.flex-row {
+  flex-direction: row;
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+  display: flex;
+}
+.assignmentgroup-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-rght: auto;
+}
 .classgroup-container {
   display: flex;
   flex-direction: row;

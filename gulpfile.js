@@ -8,6 +8,11 @@ gulp.task('webserver', function() {
   return gulp.src('.')
   .pipe(webserver({
     livereload: true,
+    proxies: [{
+          source: '/api',
+          target: 'https://htc.fdu13ss.org/api'
+        }],
+    fallback: 'index.html',
     directoryListing: false,
     open: true
   }));

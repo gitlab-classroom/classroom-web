@@ -5,16 +5,20 @@ var browserify = require('browserify')
 var source = require('vinyl-source-stream');
 
 gulp.task('webserver', function() {
-  gulp.src('app')
+  return gulp.src('.')
   .pipe(webserver({
     livereload: true,
-    directoryListing: true,
+    directoryListing: false,
     open: true
   }));
 });
 
+var paths = {
+  js: 'src/**/*.cjsx'
+}
+
 gulp.task('compile', function(done) {
-  return gulp.src('src/**/*.cjsx')
+  return gulp.src(paths.js)
   .pipe(cjsx({bare: true}).on('error', function(e) {console.log(e)}))
   .pipe(gulp.dest('./dist/'))
 })
@@ -26,4 +30,10 @@ gulp.task('browserify', ['compile'], function(done) {
   .pipe(gulp.dest('dist'))
 });
 
-gulp.task('default', ['browserify']);
+gulp.task('watch', ['browserify'], function() {
+  gulp.watch(paths.js, function() {
+    gulp.start('browserify');
+  });
+})
+
+gulp.task('default', ['webserver', 'watch']);

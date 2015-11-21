@@ -6,6 +6,9 @@ var source = require('vinyl-source-stream');
 var addsrc = require('gulp-add-src');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps')
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
 
 gulp.task('webserver', function() {
   return gulp.src('.')
@@ -34,9 +37,17 @@ gulp.task('compile', function(done) {
     extensions: ['.cjsx']
   })
    .bundle()
+   .on('error', function(err){
+      console.log(err.message);
+      this.emit('end');
+    })
    .pipe(source('app.js'))
+   .pipe(buffer())
    .pipe(addsrc('lib/*'))
-   .pipe(gulp.dest('./classroom'));
+  //  .pipe(sourcemaps.init())
+  //  .pipe(uglify())
+  //  .pipe(sourcemaps.write())
+   .pipe(gulp.dest('./classroom'))
 });
 
 gulp.task('sass', function () {

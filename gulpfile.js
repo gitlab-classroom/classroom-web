@@ -9,8 +9,13 @@ var sass = require('gulp-sass');
 var sourcemaps = require('gulp-sourcemaps')
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
+var env = require('gulp-env');
+var gutil = require('gulp-util');
+var process = require('process')
 
 gulp.task('webserver', function() {
+  var production = process.env.NODE_ENV === 'production';
+
   return gulp.src('.')
   .pipe(webserver({
     livereload: true,
@@ -18,7 +23,7 @@ gulp.task('webserver', function() {
           source: '/api',
           target: 'https://htc.fdu13ss.org/api'
         }],
-    fallback: 'index.html',
+    fallback: production ? 'index_production.html' : 'index.html',
     directoryListing: false,
     open: true
   }));
@@ -31,10 +36,14 @@ var paths = {
 }
 
 gulp.task('compile', function(done) {
-  return browserify({
+  var production = process.env.NODE_ENV === 'production';
+  console.log('production: ', production);
+
+  var t = browserify({
     entries: 'src/index.cjsx',
     transform: ['coffee-reactify'],
-    extensions: ['.cjsx']
+    extensions: ['.cjsx'],
+    debug: !production
   })
    .bundle()
    .on('error', function(err){
@@ -44,9 +53,7 @@ gulp.task('compile', function(done) {
    .pipe(source('app.js'))
    .pipe(buffer())
    .pipe(addsrc('lib/*'))
-  //  .pipe(sourcemaps.init())
-  //  .pipe(uglify())
-  //  .pipe(sourcemaps.write())
+   .pipe(production ? uglify() : gutil.noop())
    .pipe(gulp.dest('./classroom'))
 });
 
@@ -74,4 +81,13 @@ gulp.task('watch', ['compile', 'sass', 'assets'], function() {
   })
 })
 
+gulp.task('production-env', function() {
+  return env({
+    vars: {
+      NODE_ENV: 'production'
+    }
+  })
+})
+
 gulp.task('default', ['watch', 'webserver']);
+gulp.task('release', ['production-env', 'sass', 'assets', 'compile'])

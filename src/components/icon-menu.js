@@ -137,12 +137,10 @@ var IconMenu = React.createClass({
       onKeyboardFocus: this.props.onKeyboardFocus,
       iconStyle: this.mergeStyles(iconStyle, iconButtonElement.props.iconStyle),
       onTouchTap: function onTouchTap(e) {
-        console.log(e)
         _this.open(Events.isKeyboard(e));
         if (iconButtonElement.props.onTouchTap) iconButtonElement.props.onTouchTap(e);
       },
       onClick: function onClick(e) {
-        console.log(e)
         _this.open(Events.isKeyboard(e));
         if (iconButtonElement.props.onTouchTap) iconButtonElement.props.onTouchTap(e);
       },
@@ -160,7 +158,6 @@ var IconMenu = React.createClass({
         style: mergedMenuStyles }),
       this.props.children
     ) : null;
-    console.log(menu)
 
     return React.createElement(
       'div',

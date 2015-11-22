@@ -10,7 +10,7 @@ CardTitle = require('material-ui/lib/card/card-title');
 Avatar = require('material-ui/lib/avatar');
 RaisedButton = require('material-ui/lib/raised-button');
 TextField = require('material-ui/lib/text-field');
-IconMenu = require('material-ui/lib/menus/icon-menu');
+IconMenu = require('./components/icon-menu');
 MenuItem = require('material-ui/lib/menus/menu-item');
 IconButton = require('material-ui/lib/icon-button');
 FontAwesome = require('react-fontawesome');
@@ -33,8 +33,6 @@ AssignmentCard = React.createClass
                                          </IconButton>}>
               <MenuItem primaryText="Maps" />
               <MenuItem primaryText="Books" />
-              <MenuItem primaryText="Flights" />
-              <MenuItem primaryText="Apps" />
             </IconMenu>
           </div>
           <div className='flex-row' style={width: '100%'}>

@@ -13,7 +13,7 @@ TextField = require('material-ui/lib/text-field');
 IconMenu = require('material-ui/lib/menus/icon-menu');
 MenuItem = require('material-ui/lib/menus/menu-item');
 IconButton = require('material-ui/lib/icon-button');
-FontIcon = require('material-ui/lib/font-icon');
+FontAwesome = require('react-fontawesome');
 
 AssignmentCard = React.createClass
   getInitialState: ->
@@ -28,8 +28,14 @@ AssignmentCard = React.createClass
           <div className='flex-row' style={width: '100%'}>
             <div><b>ASSIGNMENT</b> {@props.start}</div>
             <div style={marginLeft: 'auto', color: '#F44336'}><b>DUE</b> {@props.end}</div>
-            <IconButton iconClassName="material-icons" tooltipPosition="bottom-center"></IconButton>
-            <IconButton iconClassName="material-icons" tooltipPosition="bottom-center"></IconButton>
+            <IconMenu iconButtonElement={<IconButton className='fuckyou'>
+                                           <FontAwesome name='ellipsis-v' />
+                                         </IconButton>}>
+              <MenuItem primaryText="Maps" />
+              <MenuItem primaryText="Books" />
+              <MenuItem primaryText="Flights" />
+              <MenuItem primaryText="Apps" />
+            </IconMenu>
           </div>
           <div className='flex-row' style={width: '100%'}>
             <div className='flex-col' style={width: '72%'}>

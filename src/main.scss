@@ -9,6 +9,14 @@
 .switchbutton {
   margin-right: 20px;
 }
+.fuckyou {
+  font-size: 20px !important;
+  padding: 0px !important;
+  width: 30px !important;
+  height: 30px !important;
+  margin-top: -5px;
+  margin-left: 10px;
+}
 .assignmentgroup-container {
   display: flex;
   flex-direction: row;
@@ -29,6 +37,9 @@
   width: 14%;
   border-left: #ccc solid 1px;
   padding-left: 10px;
+}
+.assignment-card {
+  max-width: 900px;
 }
 .classgroup-container {
   display: flex;

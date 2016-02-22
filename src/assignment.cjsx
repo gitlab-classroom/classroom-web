@@ -10,10 +10,10 @@ CardTitle = require('material-ui/lib/card/card-title');
 Avatar = require('material-ui/lib/avatar');
 RaisedButton = require('material-ui/lib/raised-button');
 TextField = require('material-ui/lib/text-field');
-IconMenu = require('material-ui/lib/menus/icon-menu');
+IconMenu = require('./components/icon-menu');
 MenuItem = require('material-ui/lib/menus/menu-item');
 IconButton = require('material-ui/lib/icon-button');
-FontIcon = require('material-ui/lib/font-icon');
+FontAwesome = require('react-fontawesome');
 
 AssignmentCard = React.createClass
   getInitialState: ->
@@ -28,8 +28,12 @@ AssignmentCard = React.createClass
           <div className='flex-row' style={width: '100%'}>
             <div><b>ASSIGNMENT</b> {@props.start}</div>
             <div style={marginLeft: 'auto', color: '#F44336'}><b>DUE</b> {@props.end}</div>
-            <IconButton iconClassName="material-icons" tooltipPosition="bottom-center"></IconButton>
-            <IconButton iconClassName="material-icons" tooltipPosition="bottom-center"></IconButton>
+            <IconMenu iconButtonElement={<IconButton className='fuckyou'>
+                                           <FontAwesome name='ellipsis-v' />
+                                         </IconButton>}>
+              <MenuItem primaryText="Maps" />
+              <MenuItem primaryText="Books" />
+            </IconMenu>
           </div>
           <div className='flex-row' style={width: '100%'}>
             <div className='flex-col' style={width: '72%'}>
@@ -80,7 +84,7 @@ AssignmentCard = React.createClass
 
 AssignmentGroup = React.createClass
   render: ->
-    <div className="assigmentgroup-container">
+    <div className="assignmentgroup-container">
       <AssignmentCard avatar="../assets/user.jpg" start="Nov17" end="Nov18" title="2015 Fall Event" description="You are a xianyu" done='14' notdone='20'/>
     </div>
 module.exports = AssignmentGroup

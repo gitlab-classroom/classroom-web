@@ -39,7 +39,7 @@ gulp.task('compile', function(done) {
   var production = process.env.NODE_ENV === 'production';
   console.log('production: ', production);
 
-  var t = browserify({
+  return browserify({
     entries: 'src/index.cjsx',
     transform: ['coffee-reactify'],
     extensions: ['.cjsx'],

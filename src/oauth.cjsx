@@ -9,11 +9,6 @@ Hello.init
 			auth: 'https://git.fdu13ss.org/oauth/authorize'
 			grant: 'https://git.fdu13ss.org/oauth/access_token'
 
-		scope:
-			basic: ''
-			email: 'email'
-			offline_access: 'offline'
-
 		refresh: true
 
 		login: (p) ->
@@ -23,11 +18,10 @@ Hello.init
 
 		base: 'https://git.fdu13ss.org/api/v3/'
 
-		xhr: true
-
-		jsonp: true
-
-		form: false
+		scope:
+			basic: ''
+			email: 'email'
+			offline_access: 'offline'
 
 if PRODUCTION
   token = 'c48b12e3a10d6f24329781153360440c4c8fd56c9fa0a88789f72633f979b322'
@@ -36,5 +30,8 @@ else
 
 Hello.init
   gitlab: token
+	,
+  oauth_proxy: 'http://127.0.0.1:10010/api/v1/session/oauth_proxy'
+
 
 module.exports = Hello

@@ -19,10 +19,10 @@ Login = React.createClass
           <Logo />
         </div>
         <div style={textAlign:'center',fontSize:48,marginBottom:10,fontWeight:500}>
-          Gitlab Classroom
+          GitLab Classroom
         </div>
         <div style={textAlign:'center',fontSize:30,fontWeight:300}>
-          Sign in with your Gitlab account
+          Sign in with your GitLab account
         </div>
       </div>
       <div style={margin:'auto', width:350}>

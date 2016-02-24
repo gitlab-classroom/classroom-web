@@ -30,4 +30,5 @@ AssignmentGroup = React.createClass
     <div className="assigmentgroup-container">
       <AssignmentCard avatar="../assets/user.jpg" start="Nov17" end="Nov18"/>
     </div>
+    
 module.exports = AssignmentGroup

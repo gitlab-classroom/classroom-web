@@ -1,3 +1,8 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
 .flex-row {
   flex-direction: row;
   display: flex;
@@ -9,14 +14,6 @@
 .assignmentgroup-container {
   display: flex;
   flex-direction: row;
-  margin-left: auto;
-  margin-rght: auto;
-}
-.classgroup-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
   margin-left: auto;
   margin-rght: auto;
 }
@@ -40,25 +37,32 @@
 }
 .class-card {
   padding: 10px;
+  width: 225px;
+  display: inline-block;
 }
+
+.class-group {
+  margin: auto;
+}
+
 @media (min-width: 980px) {
-  .class-card {
-    width: calc(25% - 20px);
+  .class-group {
+    width: 980px;
   }
 }
-@media (min-width: 768px) and (max-width: 979px) {
-  .class-card {
-    width: calc(33% - 20px);
+@media (min-width: 735px) and (max-width: 979px) {
+  .class-group {
+    width: 735px;
   }
 }
-@media (min-width: 384px) and (max-width: 767px) {
-  .class-card {
-    width: calc(50% - 20px);
+@media (min-width: 490px) and (max-width: 734px) {
+  .class-group {
+    width: 490px;
   }
 }
-@media (max-width: 383px) {
-  .class-card {
-    width: calc(100% - 20px);
+@media (max-width: 489px) {
+  .class-group {
+    width: 245px;
   }
 }
 

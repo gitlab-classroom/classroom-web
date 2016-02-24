@@ -1,3 +1,8 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
 .flex-row {
   flex-direction: row;
   display: flex;
@@ -23,32 +28,6 @@
   margin-left: auto;
   margin-rght: auto;
 }
-.assignment-title {
-  font-size: 150%;
-  font-weight: 100;
-  margin: 5px 0px;
-}
-.assignment-count {
-  font-size: 200%;
-  font-weight: 100;
-  margin: 5px 0px;
-}
-.assignment-count-box {
-  width: 14%;
-  border-left: #ccc solid 1px;
-  padding-left: 10px;
-}
-.assignment-card {
-  max-width: 900px;
-}
-.classgroup-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-left: auto;
-  margin-rght: auto;
-}
 .classgroup-middle {
   margin-left: auto;
   margin-right: auto;
@@ -69,66 +48,39 @@
 }
 .class-card {
   padding: 10px;
+  width: 225px;
+  display: inline-block;
 }
+
+.class-group {
+  margin: auto;
+}
+
 @media (min-width: 980px) {
-  .class-card {
-    width: calc(25% - 20px);
+  .class-group {
+    width: 980px;
   }
 }
-@media (min-width: 768px) and (max-width: 979px) {
-  .class-card {
-    width: calc(33% - 20px);
+@media (min-width: 735px) and (max-width: 979px) {
+  .class-group {
+    width: 735px;
   }
 }
-@media (min-width: 384px) and (max-width: 767px) {
-  .class-card {
-    width: calc(50% - 20px);
+@media (min-width: 490px) and (max-width: 734px) {
+  .class-group {
+    width: 490px;
   }
 }
-@media (max-width: 383px) {
-  .class-card {
-    width: calc(100% - 20px);
+@media (max-width: 489px) {
+  .class-group {
+    width: 245px;
   }
 }
-.login-dialog {
-  width: 300px;
-  padding: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #f7f7f7 !important;
-}
-.login-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-}
-.login-middle {
-  margin-left: auto;
-  margin-right: auto;
-}
-.login-title {
-  font-size: 250%;
-  text-align: center;
-  color: #666;
-  font-weight: 100;
-}
-.login-subtitle {
-  font-size: 18px;
-  text-align: center;
-  color: #666;
-  margin: 10px 0 20px 0;
-  font-weight: 100;
-}
-.login-logo {
-  margin-top: 40px;
-  margin-bottom: 10px;
-  width: 40px;
-  height: 40px;
-}
-.login-confirm {
-  background-color: #4a8bf5 !important;
-}
-.login-dialog > div > div:nth-child(2) > div {
-  margin-right: 0px !important;
+
+.tanuki-shape {
+  transition: all 0.8s;
+  &:hover {
+    fill: rgb(255, 255, 255);
+    transition: all 0.1s;
+  }
 }

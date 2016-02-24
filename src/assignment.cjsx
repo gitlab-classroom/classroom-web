@@ -87,4 +87,5 @@ AssignmentGroup = React.createClass
     <div className="assignmentgroup-container">
       <AssignmentCard avatar="../assets/user.jpg" start="Nov17" end="Nov18" title="2015 Fall Event" description="You are a xianyu" done='14' notdone='20'/>
     </div>
+    
 module.exports = AssignmentGroup

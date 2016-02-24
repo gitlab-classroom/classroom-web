@@ -24,6 +24,9 @@ gulp.task('webserver', function() {
           target: 'https://htc.fdu13ss.org/api'
         }],
     fallback: production ? 'index_production.html' : 'index.html',
+    filter: function(fileName) {
+      return fileName.match(/app\.js$/)
+    },
     directoryListing: false,
     open: true
   }));
@@ -33,6 +36,11 @@ var paths = {
   js: 'src/**/*.cjsx',
   css: 'src/**/*.scss',
   assets: 'assets/**/*'
+}
+
+function swallowError (error) {
+  console.log(error.toString());
+  this.emit('end');
 }
 
 gulp.task('compile', function(done) {
@@ -46,10 +54,7 @@ gulp.task('compile', function(done) {
     debug: !production
   })
    .bundle()
-   .on('error', function(err){
-      console.log(err.message);
-      this.emit('end');
-    })
+   .on('error', swallowError)
    .pipe(source('app.js'))
    .pipe(buffer())
    .pipe(addsrc('lib/*'))

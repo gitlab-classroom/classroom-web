@@ -61,45 +61,11 @@
     width: calc(100% - 20px);
   }
 }
-.login-dialog {
-  width: 300px;
-  padding: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #f7f7f7 !important;
-}
-.login-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-}
-.login-middle {
-  margin-left: auto;
-  margin-right: auto;
-}
-.login-title {
-  font-size: 250%;
-  text-align: center;
-  color: #666;
-  font-weight: 100;
-}
-.login-subtitle {
-  font-size: 18px;
-  text-align: center;
-  color: #666;
-  margin: 10px 0 20px 0;
-  font-weight: 100;
-}
-.login-logo {
-  margin-top: 40px;
-  margin-bottom: 10px;
-  width: 40px;
-  height: 40px;
-}
-.login-confirm {
-  background-color: #4a8bf5 !important;
-}
-.login-dialog > div > div:nth-child(2) > div {
-  margin-right: 0px !important;
+
+.tanuki-shape {
+  transition: all 0.8s;
+  &:hover {
+    fill: rgb(255, 255, 255);
+    transition: all 0.1s;
+  }
 }

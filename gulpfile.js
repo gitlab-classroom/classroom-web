@@ -15,6 +15,9 @@ gulp.task('webserver', function() {
           source: '/api',
           target: 'https://htc.fdu13ss.org/api'
         }],
+    filter: function(fileName) {
+      return fileName.match(/app\.js$/)
+    },
     fallback: 'index.html',
     directoryListing: false,
     open: true
@@ -27,6 +30,11 @@ var paths = {
   assets: 'assets/**/*'
 }
 
+function swallowError (error) {
+  console.log(error.toString());
+  this.emit('end');
+}
+
 gulp.task('compile', function(done) {
   return browserify({
     entries: 'src/index.cjsx',
@@ -34,6 +42,7 @@ gulp.task('compile', function(done) {
     extensions: ['.cjsx']
   })
    .bundle()
+   .on('error', swallowError)
    .pipe(source('app.js'))
    .pipe(addsrc('lib/*'))
    .pipe(gulp.dest('./classroom'));

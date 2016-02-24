@@ -2,7 +2,7 @@ Hello = require('./hello')
 
 Hello.init
 	gitlab:
-		name: 'Fdu Gitlab'
+		name: 'Fdu GitLab'
 
 		oauth:
 			version: 2,
@@ -30,7 +30,6 @@ else
 
 Hello.init
   gitlab: token
-	,
   oauth_proxy: 'http://127.0.0.1:10010/api/v1/session/oauth_proxy'
 
 

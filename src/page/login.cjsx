@@ -9,6 +9,7 @@ RaisedButton = require 'material-ui/lib/raised-button'
 Paper = require 'material-ui/lib/paper'
 Divider = require 'material-ui/lib/divider'
 
+Oauth = require '../oauth'
 Logo = require '../logo'
 
 Login = React.createClass
@@ -46,10 +47,21 @@ Login = React.createClass
         <CardActions style={padding:40,paddingTop:0}>
           <RaisedButton secondary={true}
                         label="Login"
+                        onClick={@oauthLogin}
                         style={width: '100%'} />
         </CardActions>
         </Card>
       </div>
     </div>
+    
+  oauthLogin: ->
+    Oauth 'gitlab'
+      .login response_type: 'code'
+      .then ->
+        alert 'signed in!'
+      , (e) ->
+        alert 'signed failed!'
+        console.log(e)
+
 
 module.exports = Login

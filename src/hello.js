@@ -1519,8 +1519,6 @@ hello.utils.extend(hello.utils, {
 	// OAuth and API response handler
 	responseHandler: function(window, parent) {
 
-		alert('HERE!');
-
 		var _this = this;
 		var p;
 		var location = window.location;

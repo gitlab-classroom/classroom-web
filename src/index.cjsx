@@ -2,7 +2,7 @@ React = require 'react'
 ReactDOM = require 'react-dom'
 injectTapEventPlugin = require 'react-tap-event-plugin';
 
-#Login = require './page/login'
+LoginPage = require './page/login'
 ClassPage = require './page/class'
 AppBar = require './app-bar'
 
@@ -17,4 +17,4 @@ App = React.createClass
       </div>
     </div>
 
-ReactDOM.render <App />, document.getElementById('root-elem')
+ReactDOM.render <LoginPage />, document.getElementById('root-elem')

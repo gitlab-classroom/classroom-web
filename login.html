@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>Redirecting...</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+</head>
+<body>
+
+	<div class="loading"><span>&bull;</span><span>&bull;</span><span>&bull;</span></div>
+
+	<script>
+    var host = location.origin;
+    var path = location.pathname;
+    var search = location.search;
+
+    var l = path.split('/');
+    l.pop();
+    path = l.join('/');
+
+    var url = host + path + '#/login_redirect' + search;
+
+    window.location = url
+	</script>
+</body>
+</html>

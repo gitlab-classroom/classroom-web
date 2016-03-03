@@ -3,6 +3,6 @@ Isvg = require 'react-inlinesvg'
 
 Logo = React.createClass
   render: ->
-    <Isvg src="/classroom/assets/logo.svg"/>
+    <Isvg src="assets/logo.svg"/>
 
 module.exports = Logo

@@ -11,12 +11,13 @@ var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var env = require('gulp-env');
 var gutil = require('gulp-util');
-var process = require('process')
+var process = require('process');
+var rename = require("gulp-rename");
 
 gulp.task('webserver', function() {
   var production = process.env.NODE_ENV === 'production';
 
-  return gulp.src('.')
+  return gulp.src('./dist')
   .pipe(webserver({
     livereload: true,
     proxies: [{
@@ -35,7 +36,7 @@ gulp.task('webserver', function() {
 var paths = {
   js: 'src/**/*.cjsx',
   css: 'src/**/*.scss',
-  assets: 'assets/**/*'
+  assets: 'assets/**/*',
 }
 
 function swallowError (error) {
@@ -57,24 +58,31 @@ gulp.task('compile', function(done) {
    .on('error', swallowError)
    .pipe(source('app.js'))
    .pipe(buffer())
-   .pipe(addsrc('lib/*'))
    .pipe(production ? uglify() : gutil.noop())
-   .pipe(gulp.dest('./classroom'))
+   .pipe(gulp.dest('./dist'))
 });
 
 gulp.task('sass', function () {
   return gulp.src(paths.css)
     .pipe(sass().on('error', sass.logError))
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('./classroom'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('assets', function() {
   return gulp.src(paths.assets)
-    .pipe(gulp.dest('./classroom/assets'));
-})
+    .pipe(gulp.dest('./dist/assets'));
+});
 
-gulp.task('watch', ['compile', 'sass', 'assets'], function() {
+gulp.task('index_html', function() {
+  var production = process.env.NODE_ENV === 'production';
+
+  return gulp.src(production ? 'index_production.html' : 'index.html')
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('watch', ['compile', 'sass', 'assets', 'index_html'], function() {
   gulp.watch(paths.js, function() {
     gulp.start('compile');
   });
@@ -83,6 +91,9 @@ gulp.task('watch', ['compile', 'sass', 'assets'], function() {
   });
   gulp.watch(paths.assets, function() {
     gulp.start('assets');
+  });
+  gulp.watch('index.html', function() {
+    gulp.start('index_html');
   })
 })
 

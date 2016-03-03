@@ -9,11 +9,12 @@ RaisedButton = require 'material-ui/lib/raised-button'
 Paper = require 'material-ui/lib/paper'
 Divider = require 'material-ui/lib/divider'
 
-Oauth = require '../oauth'
+OAuth = require '../oauth'
 Logo = require '../logo'
 
 Login = React.createClass
   render: ->
+    return
     <div style={fontFamily:'Roboto, sans-serif', color:'#555'}>
       <div style={width:'100%',height:200}>
         <div style={width:56,height:56,margin:'15px auto'}>
@@ -23,45 +24,26 @@ Login = React.createClass
           GitLab Classroom
         </div>
         <div style={textAlign:'center',fontSize:30,fontWeight:300}>
-          Sign in with your GitLab account
+          Fudan Software School GitLab Server
         </div>
       </div>
       <div style={margin:'auto', width:350}>
         <Card style={backgroundColor:'#f7f7f7'}>
-        <CardText style={padding:40,paddingBottom:20}>
-          <Avatar size={96} src="../assets/user.jpg"
+        <CardText style={padding:40,paddingBottom:0}>
+          <Avatar size={128} src="../assets/fudan_logo.png"
                   style={margin: 'auto', display: 'block'} />
-          <Paper zDepth={1}
-                 style={marginTop: 30}>
-            <TextField hintText="Username"
-                       underlineShow={false}
-                       style={marginLeft:20} />
-            <Divider />
-            <TextField hintText="Password"
-                       underlineShow={false}
-                       type='password'
-                       style={marginLeft:20} />
-            <Divider />
-          </Paper>
         </CardText>
-        <CardActions style={padding:40,paddingTop:0}>
+        <CardActions style={padding:40}>
           <RaisedButton secondary={true}
-                        label="Login"
+                        label="Login with GitLab Account"
                         onClick={@oauthLogin}
                         style={width: '100%'} />
         </CardActions>
         </Card>
       </div>
     </div>
-    
-  oauthLogin: ->
-    Oauth 'gitlab'
-      .login response_type: 'code'
-      .then ->
-        alert 'signed in!'
-      , (e) ->
-        alert 'signed failed!'
-        console.log(e)
 
+  oauthLogin: ->
+    window.location = OAuth.code.getUri()
 
 module.exports = Login

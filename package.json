@@ -11,6 +11,7 @@
     "url": "https://github.com/gitlab-classroom/classroom-web.git"
   },
   "dependencies": {
+    "client-oauth2": "^2.0.0",
     "coffee-react": "^4.0.0",
     "coffee-reactify": "^4.0.0",
     "coffee-script": "^1.9.3",
@@ -20,13 +21,14 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",
     "history": "^1.13.1",
-    "node-sass": "^3.4.2",
     "material-ui": "^0.14.4",
+    "node-sass": "^3.4.2",
+    "oauthio-web": "^0.5.1",
     "react": "^0.14.3",
     "react-document-title": "^2.0.1",
     "react-dom": "^0.14.3",
     "react-fontawesome": "^0.3.3",
-    "react-router": "^1.0.0",
+    "react-router": "^1.0.3",
     "react-tap-event-plugin": "^0.2.0",
     "vinyl-buffer": "^1.0.0"
   },
@@ -34,6 +36,7 @@
     "browserify": "^12.0.1",
     "gulp": "^3.9.0",
     "gulp-cjsx": "^3.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-webserver": "^0.9.1",
     "vinyl-source-stream": "^1.1.0"
   }

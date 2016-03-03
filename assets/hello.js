@@ -1,156 +1,3 @@
-/*! hellojs v1.9.8 | (c) 2012-2015 Andrew Dodson | MIT https://adodson.com/hello.js/LICENSE */
-// ES5 Object.create
-if (!Object.create) {
-
-	// Shim, Object create
-	// A shim for Object.create(), it adds a prototype to a new object
-	Object.create = (function() {
-
-		function F() {}
-
-		return function(o) {
-
-			if (arguments.length != 1) {
-				throw new Error('Object.create implementation only accepts one parameter.');
-			}
-
-			F.prototype = o;
-			return new F();
-		};
-
-	})();
-
-}
-
-// ES5 Object.keys
-if (!Object.keys) {
-	Object.keys = function(o, k, r) {
-		r = [];
-		for (k in o) {
-			if (r.hasOwnProperty.call(o, k))
-				r.push(k);
-		}
-
-		return r;
-	};
-}
-
-// ES5 [].indexOf
-if (!Array.prototype.indexOf) {
-	Array.prototype.indexOf = function(s) {
-
-		for (var j = 0; j < this.length; j++) {
-			if (this[j] === s) {
-				return j;
-			}
-		}
-
-		return -1;
-	};
-}
-
-// ES5 [].forEach
-if (!Array.prototype.forEach) {
-	Array.prototype.forEach = function(fun/*, thisArg*/) {
-
-		if (this === void 0 || this === null) {
-			throw new TypeError();
-		}
-
-		var t = Object(this);
-		var len = t.length >>> 0;
-		if (typeof fun !== 'function') {
-			throw new TypeError();
-		}
-
-		var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
-		for (var i = 0; i < len; i++) {
-			if (i in t) {
-				fun.call(thisArg, t[i], i, t);
-			}
-		}
-
-		return this;
-	};
-}
-
-// ES5 [].filter
-if (!Array.prototype.filter) {
-	Array.prototype.filter = function(fun, thisArg) {
-
-		var a = [];
-		this.forEach(function(val, i, t) {
-			if (fun.call(thisArg || void 0, val, i, t)) {
-				a.push(val);
-			}
-		});
-
-		return a;
-	};
-}
-
-// Production steps of ECMA-262, Edition 5, 15.4.4.19
-// Reference: http://es5.github.io/#x15.4.4.19
-if (!Array.prototype.map) {
-
-	Array.prototype.map = function(fun, thisArg) {
-
-		var a = [];
-		this.forEach(function(val, i, t) {
-			a.push(fun.call(thisArg || void 0, val, i, t));
-		});
-
-		return a;
-	};
-}
-
-// ES5 isArray
-if (!Array.isArray) {
-
-	// Function Array.isArray
-	Array.isArray = function(o) {
-		return Object.prototype.toString.call(o) === '[object Array]';
-	};
-
-}
-
-// Test for location.assign
-if (typeof window === 'object' && typeof window.location === 'object' && !window.location.assign) {
-
-	window.location.assign = function(url) {
-		window.location = url;
-	};
-
-}
-
-// Test for Function.bind
-if (!Function.prototype.bind) {
-
-	// MDN
-	// Polyfill IE8, does not support native Function.bind
-	Function.prototype.bind = function(b) {
-
-		if (typeof this !== 'function') {
-			throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-		}
-
-		function C() {}
-
-		var a = [].slice;
-		var f = a.call(arguments, 1);
-		var _this = this;
-		var D = function() {
-			return _this.apply(this instanceof C ? this : b || window, f.concat(a.call(arguments)));
-		};
-
-		C.prototype = this.prototype;
-		D.prototype = new C();
-
-		return D;
-	};
-
-}
-
 /**
  * @hello.js
  *
@@ -213,6 +60,29 @@ hello.utils.extend(hello, {
 			scrollbars: 1,
 			width: 500,
 			height: 550
+		},
+
+		// Default scope
+		// Many services require atleast a profile scope,
+		// HelloJS automatially includes the value of provider.scope_map.basic
+		// If that's not required it can be removed via hello.settings.scope.length = 0;
+		scope: ['basic'],
+
+		// Scope Maps
+		// This is the default module scope, these are the defaults which each service is mapped too.
+		// This list is only the popular ones being standardized.
+		// By including them here it prevents the scopes from being applied accidentally
+		// For less common scopes its assumed the Developer knows when to use the scope.
+		scope_map: {
+			basic: '',
+			email: '',
+			files: '',
+			friends: '',
+			photos: '',
+			publish: '',
+			publish_files: '',
+			share: '',
+			videos: ''
 		},
 
 		// Default service / network
@@ -280,14 +150,6 @@ hello.utils.extend(hello, {
 		// Merge services if there already exists some
 		utils.extend(this.services, services);
 
-		// Format the incoming
-		for (x in this.services) {
-			if (this.services.hasOwnProperty(x)) {
-				this.services[x].scope = this.services[x].scope || {};
-			}
-		}
-
-		//
 		// Update the default settings with this one.
 		if (options) {
 			utils.extend(this.settings, options);
@@ -357,8 +219,6 @@ hello.utils.extend(hello, {
 			// The responseHandler returns a string, lets save this locally
 			var obj;
 
-			alert("WHAT");
-
 			if (str) {
 				obj = JSON.parse(str);
 			}
@@ -402,7 +262,6 @@ hello.utils.extend(hello, {
 			response_type: encodeURIComponent(responseType),
 			redirect_uri: encodeURIComponent(redirectUri),
 			display: opts.display,
-			scope: 'basic',
 			state: {
 				client_id: provider.id,
 				network: p.network,
@@ -420,18 +279,27 @@ hello.utils.extend(hello, {
 		// Ensure this is a string - IE has a problem moving Arrays between windows
 		// Append the setup scope
 		var SCOPE_SPLIT = /[,\s]+/;
-		var scope = (opts.scope || '').toString() + ',' + p.qs.scope;
+
+		// Include default scope settings (cloned).
+		var scope = _this.settings.scope ? [_this.settings.scope.toString()] : [];
+
+		// Extend the providers scope list with the default
+		var scopeMap = utils.merge(_this.settings.scope_map, provider.scope || {});
+
+		// Add user defined scopes...
+		if (opts.scope) {
+			scope.push(opts.scope.toString());
+		}
 
 		// Append scopes from a previous session.
 		// This helps keep app credentials constant,
 		// Avoiding having to keep tabs on what scopes are authorized
 		if (session && 'scope' in session && session.scope instanceof String) {
-			scope += ',' + session.scope;
+			scope.push(session.scope);
 		}
 
-		// Convert scope to an Array
-		// - easier to manipulate
-		scope = scope.split(SCOPE_SPLIT);
+		// Join and Split again
+		scope = scope.join(',').split(SCOPE_SPLIT);
 
 		// Format remove duplicates and empty values
 		scope = utils.unique(scope).filter(filterEmpty);
@@ -442,23 +310,7 @@ hello.utils.extend(hello, {
 		// Map scopes to the providers naming convention
 		scope = scope.map(function(item) {
 			// Does this have a mapping?
-			if (item in provider.scope) {
-				return provider.scope[item];
-			}
-			else {
-				// Loop through all services and determine whether the scope is generic
-				for (var x in _this.services) {
-					var serviceScopes = _this.services[x].scope;
-					if (serviceScopes && item in serviceScopes) {
-						// Found an instance of this scope, so lets not assume its special
-						return '';
-					}
-				}
-
-				// This is a unique scope to this service so lets in it.
-				return item;
-			}
-
+			return (item in scopeMap) ? scopeMap[item] : item;
 		});
 
 		// Stringify and Arrayify so that double mapped scopes are given the chance to be formatted
@@ -541,6 +393,9 @@ hello.utils.extend(hello, {
 		else {
 			url = utils.qs(provider.oauth.auth, p.qs, encodeFunction);
 		}
+
+		// Broadcast this event as an auth:init
+		emit('auth.init', p);
 
 		// Execute
 		// Trigger how we want self displayed
@@ -625,7 +480,7 @@ hello.utils.extend(hello, {
 			var callback = function(opts) {
 
 				// Remove from the store
-				utils.store(p.name, '');
+				utils.store(p.name, null);
 
 				// Emit events by default
 				promise.fulfill(hello.utils.merge({network:p.name}, opts || {}));
@@ -1404,102 +1259,6 @@ hello.utils.extend(hello.utils, {
 			optionsArray.push(name + (value !== null ? '=' + value : ''));
 		});
 
-		// Create a function for reopening the popup, and assigning events to the new popup object
-		// This is a fix whereby triggering the
-		var open = function(url) {
-
-			// Trigger callback
-			var popup = window.open(
-				url,
-				'_blank',
-				optionsArray.join(',')
-			);
-
-			// PhoneGap support
-			// Add an event listener to listen to the change in the popup windows URL
-			// This must appear before popup.focus();
-			try {
-				if (popup && popup.addEventListener) {
-
-					// Get the origin of the redirect URI
-
-					var a = hello.utils.url(redirectUri);
-					var redirectUriOrigin = a.origin || (a.protocol + '//' + a.hostname);
-
-					// Listen to changes in the InAppBrowser window
-
-					popup.addEventListener('loadstart', function(e) {
-
-						var url = e.url;
-
-						// Is this the path, as given by the redirectUri?
-						// Check the new URL agains the redirectUriOrigin.
-						// According to #63 a user could click 'cancel' in some dialog boxes ....
-						// The popup redirects to another page with the same origin, yet we still wish it to close.
-
-						if (url.indexOf(redirectUriOrigin) !== 0) {
-							return;
-						}
-
-						// Split appart the URL
-						var a = hello.utils.url(url);
-
-						// We dont have window operations on the popup so lets create some
-						// The location can be augmented in to a location object like so...
-
-						var _popup = {
-							location: {
-								// Change the location of the popup
-								assign: function(location) {
-
-									// Unfourtunatly an app is may not change the location of a InAppBrowser window.
-									// So to shim this, just open a new one.
-
-									popup.addEventListener('exit', function() {
-
-										// For some reason its failing to close the window if a new window opens too soon.
-
-										setTimeout(function() {
-											open(location);
-										}, 1000);
-									});
-								},
-
-								search: a.search,
-								hash: a.hash,
-								href: a.href
-							},
-							close: function() {
-								if (popup.close) {
-									popup.close();
-								}
-							}
-						};
-
-						// Then this URL contains information which HelloJS must process
-						// URL string
-						// Window - any action such as window relocation goes here
-						// Opener - the parent window which opened this, aka this script
-
-						hello.utils.responseHandler(_popup, window);
-
-						// Always close the popup regardless of whether the hello.utils.responseHandler detects a state parameter or not in the querystring.
-						// Such situations might arise such as those in #63
-
-						_popup.close();
-
-					});
-				}
-			}
-			catch (e) {}
-
-			if (popup && popup.focus) {
-				popup.focus();
-			}
-
-			return popup;
-		};
-
 		// Call the open() function with the initial path
 		//
 		// OAuth redirect, fixes URI fragments from being lost in Safari
@@ -1513,7 +1272,17 @@ hello.utils.extend(hello.utils, {
 			url = redirectUri + '#oauth_redirect=' + encodeURIComponent(encodeURIComponent(url));
 		}
 
-		return open(url);
+		var popup = window.open(
+			url,
+			'_blank',
+			optionsArray.join(',')
+		);
+
+		if (popup && popup.focus) {
+			popup.focus();
+		}
+
+		return popup;
 	},
 
 	// OAuth and API response handler
@@ -1662,35 +1431,32 @@ hello.utils.extend(hello.utils, {
 
 		function closeWindow() {
 
-			// Close this current window
-			try {
-				window.close();
+			if (window.frameElement) {
+				// Inside an iframe, remove from parent
+				parent.document.body.removeChild(window.frameElement);
 			}
-			catch (e) {}
-
-			// IOS bug wont let us close a popup if still loading
-			if (window.addEventListener) {
-				window.addEventListener('load', function() {
+			else {
+				// Close this current window
+				try {
 					window.close();
-				});
+				}
+				catch (e) {}
+
+				// IOS bug wont let us close a popup if still loading
+				if (window.addEventListener) {
+					window.addEventListener('load', function() {
+						window.close();
+					});
+				}
 			}
+
 		}
 	}
 });
 
 // Events
-
 // Extend the hello object with its own event instance
 hello.utils.Event.call(hello);
-
-/////////////////////////////////////
-//
-// Save any access token that is in the current page URL
-// Handle any response solicited through iframe hash tag following an API request
-//
-/////////////////////////////////////
-
-hello.utils.responseHandler(window, window.opener || window.parent);
 
 ///////////////////////////////////
 // Monitoring session state
@@ -2867,156 +2633,11 @@ hello.utils.extend(hello.utils, {
 
 })(hello);
 
-// Script to support ChromeApps
-// This overides the hello.utils.popup method to support chrome.identity.launchWebAuthFlow
-// See https://developer.chrome.com/apps/app_identity#non
+/////////////////////////////////////
+//
+// Save any access token that is in the current page URL
+// Handle any response solicited through iframe hash tag following an API request
+//
+/////////////////////////////////////
 
-// Is this a chrome app?
-
-if (typeof chrome === 'object' && typeof chrome.identity === 'object' && chrome.identity.launchWebAuthFlow) {
-
-	(function() {
-
-		// Swap the popup method
-		hello.utils.popup = function(url) {
-
-			return _open(url, true);
-
-		};
-
-		// Swap the hidden iframe method
-		hello.utils.iframe = function(url) {
-
-			_open(url, false);
-
-		};
-
-		// Swap the request_cors method
-		hello.utils.request_cors = function(callback) {
-
-			callback();
-
-			// Always run as CORS
-
-			return true;
-		};
-
-		// Swap the storage method
-		var _cache = {};
-		chrome.storage.local.get('hello', function(r) {
-			// Update the cache
-			_cache = r.hello || {};
-		});
-
-		hello.utils.store = function(name, value) {
-
-			// Get all
-			if (arguments.length === 0) {
-				return _cache;
-			}
-
-			// Get
-			if (arguments.length === 1) {
-				return _cache[name] || null;
-			}
-
-			// Set
-			if (value) {
-				_cache[name] = value;
-				chrome.storage.local.set({hello: _cache});
-				return value;
-			}
-
-			// Delete
-			if (value === null) {
-				delete _cache[name];
-				chrome.storage.local.set({hello: _cache});
-				return null;
-			}
-		};
-
-		// Open function
-		function _open(url, interactive) {
-
-			// Launch
-			var ref = {
-				closed: false
-			};
-
-			// Launch the webAuthFlow
-			chrome.identity.launchWebAuthFlow({
-				url: url,
-				interactive: interactive
-			}, function(responseUrl) {
-
-				// Did the user cancel this prematurely
-				if (responseUrl === undefined) {
-					ref.closed = true;
-					return;
-				}
-
-				// Split appart the URL
-				var a = hello.utils.url(responseUrl);
-
-				// The location can be augmented in to a location object like so...
-				// We dont have window operations on the popup so lets create some
-				var _popup = {
-					location: {
-
-						// Change the location of the popup
-						assign: function(url) {
-
-							// If there is a secondary reassign
-							// In the case of OAuth1
-							// Trigger this in non-interactive mode.
-							_open(url, false);
-						},
-
-						search: a.search,
-						hash: a.hash,
-						href: a.href
-					},
-					close: function() {}
-				};
-
-				// Then this URL contains information which HelloJS must process
-				// URL string
-				// Window - any action such as window relocation goes here
-				// Opener - the parent window which opened this, aka this script
-
-				hello.utils.responseHandler(_popup, window);
-			});
-
-			// Return the reference
-			return ref;
-		}
-
-	})();
-}
-
-// Phonegap override for hello.phonegap.js
-(function() {
-
-	// Is this a phonegap implementation?
-	if (!(/^file:\/{3}[^\/]/.test(window.location.href) && window.cordova)) {
-		// Cordova is not included.
-		return;
-	}
-
-	// Augment the hidden iframe method
-	hello.utils.iframe = function(url, redirectUri) {
-		hello.utils.popup(url, redirectUri, {hidden: 'yes'});
-	};
-})();
-
-// Register as anonymous AMD module
-if (typeof define === 'function' && define.amd) {
-	define(function() {
-		return hello;
-	});
-}
-
-// CommonJS module for browserify
-if (typeof module === 'object' && module.exports) {
-	module.exports = hello;
-}
+hello.utils.responseHandler(window, window.opener || window.parent);

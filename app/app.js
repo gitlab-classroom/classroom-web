@@ -29,7 +29,7 @@ import configureStore from './store';
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Import CSS reset and Global Styles
-import 'sanitize.css/sanitize.css';
+// import 'sanitize.css/sanitize.css';
 import './global-styles';
 
 // Needed for onTouchTap

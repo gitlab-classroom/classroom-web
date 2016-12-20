@@ -74,21 +74,25 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 const render = (messages) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
-        />
-      </LanguageProvider>
-    </Provider>,
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <Router
+            history={history}
+            routes={rootRoute}
+            render={
+              // Scroll to top when going to a new page, imitating default browser
+              // behaviour
+              applyRouterMiddleware(useScroll())
+            }
+          />
+        </LanguageProvider>
+      </Provider>
+    </MuiThemeProvider>,
     document.getElementById('app')
   );
 };

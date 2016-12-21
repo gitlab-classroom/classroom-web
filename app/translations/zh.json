@@ -1,8 +1,11 @@
 {
+  "app.containers.ClassesPage.header": "",
+  "app.containers.LoginPage.header": "",
+  "app.containers.LoginPage.login": "",
+  "app.containers.LoginPage.password": "",
+  "app.containers.LoginPage.username": "",
   "boilerplate.components.Footer.author.message": "",
   "boilerplate.components.Footer.license.message": "",
-  "boilerplate.components.Header.features": "",
-  "boilerplate.components.Header.home": "这是主页",
   "boilerplate.containers.FeaturePage.css.header": "",
   "boilerplate.containers.FeaturePage.css.message": "",
   "boilerplate.containers.FeaturePage.feedback.header": "",

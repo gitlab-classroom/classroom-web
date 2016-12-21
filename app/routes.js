@@ -67,6 +67,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/classes',
+      name: 'classesPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/ClassesPage/reducer'),
+          System.import('containers/ClassesPage/sagas'),
+          System.import('containers/ClassesPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('classesPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

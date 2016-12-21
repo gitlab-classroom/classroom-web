@@ -26,8 +26,6 @@ import { changeUsername } from './actions';
 import { selectUsername } from './selectors';
 import { selectRepos, selectLoading, selectError } from 'containers/App/selectors';
 
-import FlatButton from 'material-ui/FlatButton';
-
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
    * when initial state username is not null, submit the form to load repos
@@ -59,12 +57,6 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
 
     return (
       <article>
-        <div>
-          <FlatButton label="Default" />
-          <FlatButton label="Primary" primary />
-          <FlatButton label="Secondary" secondary />
-          <FlatButton label="Disabled" disabled />
-        </div>
         <Helmet
           title="Home Page"
           meta={[

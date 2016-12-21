@@ -1,11 +1,11 @@
-// import { LoginPage } from '../index';
+// import { Header } from '../index';
 
 import expect from 'expect';
 // import { shallow } from 'enzyme';
 // import React from 'react';
 
-describe('<LoginPage />', () => {
+describe('<Header />', () => {
   it('Expect to have unit tests specified', () => {
-    expect(true).toEqual(true);
+    expect(true).toEqual(false);
   });
 });

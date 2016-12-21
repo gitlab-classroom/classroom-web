@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import selectLoginPage from './selectors';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router';
 import messages from './messages';
 
 import Paper from 'material-ui/Paper';
@@ -75,7 +76,9 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
             type="password"
             style={{ width: '100%', marginTop: -16, marginBottom: 16 }}
           />
-          <RaisedButton primary label={<FormattedMessage {...messages.login} />} />
+          <Link to="/classes">
+            <RaisedButton primary label={<FormattedMessage {...messages.login} />} />
+          </Link>
         </LoginContainer>
       </PageContainer>
     );

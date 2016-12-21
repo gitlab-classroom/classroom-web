@@ -10,8 +10,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 
-// import Header from 'components/Header';
-// import Footer from 'components/Footer';
+import Header from '../Header';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -24,16 +23,19 @@ const AppWrapper = styled.div`
 
 function App(props) {
   return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-        meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
-        ]}
-      />
-      {React.Children.toArray(props.children)}
-    </AppWrapper>
+    <div>
+      <Header />
+      <AppWrapper>
+        <Helmet
+          titleTemplate="%s - GitLab Classroom"
+          defaultTitle="GitLab Classroom"
+          meta={[
+            { name: 'description', content: 'GitLab Classroom' },
+          ]}
+        />
+        {React.Children.toArray(props.children)}
+      </AppWrapper>
+    </div>
   );
 }
 

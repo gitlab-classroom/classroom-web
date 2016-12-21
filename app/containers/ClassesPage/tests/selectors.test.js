@@ -1,10 +1,10 @@
-// import { selectLoginPageDomain } from '../selectors';
+// import { selectClassesPageDomain } from '../selectors';
 // import { fromJS } from 'immutable';
 import expect from 'expect';
 
-// const selector = selectLoginPageDomain();
+// const selector = selectClassesPageDomain();
 
-describe('selectLoginPageDomain', () => {
+describe('selectClassesPageDomain', () => {
   it('Expect to have unit tests specified', () => {
     expect(false).toEqual(false);
   });

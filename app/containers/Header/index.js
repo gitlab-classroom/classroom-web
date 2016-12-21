@@ -8,6 +8,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import selectHeader from './selectors';
 import AppBar from 'material-ui/AppBar';
+import styled from 'styled-components';
+
+const AppBarContainer = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+`;
 
 export class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
@@ -19,11 +27,7 @@ export class Header extends React.Component { // eslint-disable-line react/prefe
     if (appbarArgs.hide) {
       return null;
     }
-    return (
-      <AppBar
-        {...appbarArgs}
-      />
-    );
+    return <AppBarContainer><AppBar {...appbarArgs} /></AppBarContainer>;
   }
 }
 

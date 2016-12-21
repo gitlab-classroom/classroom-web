@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import selectLoginPage from './selectors';
@@ -15,6 +16,8 @@ import messages from './messages';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+
+import { setAppbar } from '../Header/actions';
 
 import Img from '../../components/Img';
 import LogoImg from './logo.png';
@@ -58,6 +61,17 @@ const StyledAvatar = styled(Img)`
 `;
 
 export class LoginPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+  static propTypes = {
+    setAppbar: React.PropTypes.func,
+  }
+
+  componentDidMount() {
+    this.props.setAppbar({
+      hide: true,
+    });
+  }
+
   render() {
     return (
       <PageContainer>
@@ -88,9 +102,9 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
 const mapStateToProps = selectLoginPage();
 
 function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
+  return bindActionCreators({
+    setAppbar,
+  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

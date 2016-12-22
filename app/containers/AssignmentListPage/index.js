@@ -25,7 +25,7 @@ const tableData = [
     name: 'Team Building',
     status: 'Expired',
     git: 'https://',
-    operation: 'Copy',
+    action: 'Copy Git Address',
     primary: true,
     secondary: false,
     selected: true,
@@ -34,7 +34,7 @@ const tableData = [
     name: 'Requirement Analysis',
     status: 'In Progress',
     git: 'https://',
-    operation: 'Copy',
+    action: 'Copy Git Address',
     primary: true,
     secondary: false,
   },
@@ -42,18 +42,18 @@ const tableData = [
     name: 'Meeting',
     status: 'In Progress',
     git: 'https://',
-    operation: 'Fork',
-    primary: false,
-    secondary: true,
+    action: 'Copy Git Address',
+    primary: true,
+    secondary: false,
     selected: true,
   },
   {
     name: 'Presentation',
-    status: 'Unpublished',
+    status: 'In Progress',
     git: 'https://',
-    operation: 'Fork',
-    primary: false,
-    secondary: true,
+    action: 'Copy Git Address',
+    primary: true,
+    secondary: false,
   },
 ];
 
@@ -144,14 +144,14 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
                   <TableHeaderColumn colSpan="3" tooltip="Super Header">
                     <HeaderContainer>
                       <h1>Assignments</h1>
-                      <PlusButton label="+" primary />
+                      <PlusButton label="Create" primary />
                     </HeaderContainer>
                   </TableHeaderColumn>
                 </TableRow>
                 <TableRow>
                   <TableHeaderColumn>Name</TableHeaderColumn>
                   <TableHeaderColumn>Status</TableHeaderColumn>
-                  <TableHeaderColumn>Git</TableHeaderColumn>
+                  <TableHeaderColumn>Action</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
@@ -165,7 +165,7 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
                     <TableRowColumn>{row.name}</TableRowColumn>
                     <TableRowColumn>{row.status}</TableRowColumn>
                     <OperationContainer>
-                      <FlatButton label={row.operation} primary={row.primary} secondary={row.secondary}></FlatButton>
+                      <FlatButton label={row.action} primary={row.primary} secondary={row.secondary}></FlatButton>
                     </OperationContainer>
                   </TableRow>
                 ))}

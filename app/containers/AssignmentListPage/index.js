@@ -18,25 +18,42 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
   from 'material-ui/Table';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 
 const tableData = [
   {
     name: 'Team Building',
     status: 'Expired',
+    git: 'https://',
+    operation: 'Copy',
+    primary: true,
+    secondary: false,
     selected: true,
   },
   {
     name: 'Requirement Analysis',
     status: 'In Progress',
+    git: 'https://',
+    operation: 'Copy',
+    primary: true,
+    secondary: false,
   },
   {
     name: 'Meeting',
     status: 'In Progress',
+    git: 'https://',
+    operation: 'Fork',
+    primary: false,
+    secondary: true,
     selected: true,
   },
   {
     name: 'Presentation',
     status: 'Unpublished',
+    git: 'https://',
+    operation: 'Fork',
+    primary: false,
+    secondary: true,
   },
 ];
 
@@ -90,9 +107,16 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
       display: flex;
       justify-content: space-between;
     `;
-    const StyledButton = styled(RaisedButton)`
+    const PlusButton = styled(RaisedButton)`
       margin: 16px;
     `;
+    const OperationContainer = styled.div`
+      display: flex;
+      align-items: stretch;
+      height: 50px;
+      padding-top: 8px;
+    `;
+
 
     return (
       <div>
@@ -120,17 +144,14 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
                   <TableHeaderColumn colSpan="3" tooltip="Super Header">
                     <HeaderContainer>
                       <h1>Assignments</h1>
-                      <div>
-                        <StyledButton label="Publish" primary />
-                        <StyledButton label="+" primary />
-                      </div>
+                      <PlusButton label="+" primary />
                     </HeaderContainer>
                   </TableHeaderColumn>
                 </TableRow>
                 <TableRow>
-                  <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
-                  <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
-                  <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
+                  <TableHeaderColumn>Name</TableHeaderColumn>
+                  <TableHeaderColumn>Status</TableHeaderColumn>
+                  <TableHeaderColumn>Git</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
@@ -141,9 +162,11 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
               >
                 {tableData.map((row, index) => (
                   <TableRow key={index} selected={row.selected}>
-                    <TableRowColumn>{index}</TableRowColumn>
                     <TableRowColumn>{row.name}</TableRowColumn>
                     <TableRowColumn>{row.status}</TableRowColumn>
+                    <OperationContainer>
+                      <FlatButton label={row.operation} primary={row.primary} secondary={row.secondary}></FlatButton>
+                    </OperationContainer>
                   </TableRow>
                 ))}
               </TableBody>

@@ -16,7 +16,7 @@ import messages from './messages';
 import { setAppbar } from '../Header/actions';
 import ClassCard from '../../components/ClassCard';
 
-import { cyan500 } from 'material-ui/styles/colors';
+import { amber300 } from 'material-ui/styles/colors';
 
 
 export class ClassesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -47,27 +47,17 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
           ]}
         />
         <ClassesContainer>
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
+          <ClassCard headerColor={amber300} />
         </ClassesContainer>
       </div>
     );

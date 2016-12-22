@@ -17,6 +17,30 @@ const StyledCard = styled(Paper)`
   flex-direction: column;
 `;
 
+
+const CourseHeader = styled.h3`
+    width: 100%;
+    margin-top: 30px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+`;
+
+const StudentInfo = styled.p`
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+`;
+
+const AssignmentInfo = styled.p`
+  margin-left: 10px;
+  font-size: 60%;
+`;
+
 function ClassCard({ headerColor }) {
   const CardHeader = styled.div`
     width: 100%;
@@ -26,7 +50,11 @@ function ClassCard({ headerColor }) {
 
   return (
     <StyledCard zDepth={2} >
-      <CardHeader />
+      <CardHeader>
+        <CourseHeader> Project Management </CourseHeader>
+        <StudentInfo> 20 Students </StudentInfo>
+      </CardHeader>
+      <AssignmentInfo>1 Assignment</AssignmentInfo>
     </StyledCard>
   );
 }

@@ -113,6 +113,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/assignments',
+      name: 'assignmentListPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/AssignmentListPage/reducer'),
+          System.import('containers/AssignmentListPage/sagas'),
+          System.import('containers/AssignmentListPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('assignmentListPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

@@ -26,7 +26,6 @@ const AppWrapper = styled.div`
 function App(props) {
   return (
     <div>
-      <Header />
       <AppWrapper>
         <Helmet
           titleTemplate="%s - GitLab Classroom"
@@ -37,6 +36,7 @@ function App(props) {
         />
         {React.Children.toArray(props.children)}
       </AppWrapper>
+      <Header />
       <ErrorIndicator />
     </div>
   );

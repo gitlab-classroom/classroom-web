@@ -114,7 +114,7 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
       display: flex;
       align-items: stretch;
       height: 50px;
-      padding-top: 8px;
+      padding-top: 12px;
     `;
 
 

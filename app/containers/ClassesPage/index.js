@@ -16,7 +16,9 @@ import messages from './messages';
 import { setAppbar } from '../Header/actions';
 import ClassCard from '../../components/ClassCard';
 
-import { amber300 } from 'material-ui/styles/colors';
+import {
+  // pink300, lightBlue300, teal300, teal200, cyan200,
+          pink300, amber400, blue400, cyan400 } from 'material-ui/styles/colors';
 
 
 export class ClassesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -38,6 +40,13 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
       display: flex;
       flex-wrap: wrap;
     `;
+    // const colors2 = [lightBlue300, cyan200, teal200, teal300, pink300];
+    const colors = [pink300, amber400, blue400, cyan400];
+    const classCards = [];
+    for (let i = 0; i < 24; i += 1) {
+      const selectedColor = colors[i % colors.length];
+      classCards.push(<ClassCard headerColor={selectedColor} />);
+    }
     return (
       <div>
         <Helmet
@@ -46,18 +55,9 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
             { name: 'description', content: 'Description of ClassesPage' },
           ]}
         />
+
         <ClassesContainer>
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
-          <ClassCard headerColor={amber300} />
+          {classCards}
         </ClassesContainer>
       </div>
     );

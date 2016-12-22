@@ -10,4 +10,8 @@ export default defineMessages({
     id: 'app.containers.ErrorIndicator.serverError',
     defaultMessage: 'Something wrong with the server. Please contact developer.',
   },
+  loginRequired: {
+    id: 'app.containers.ErrorIndicator.loginRequired',
+    defaultMessage: 'Please login first.',
+  },
 });

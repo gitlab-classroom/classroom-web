@@ -22,4 +22,8 @@ export default defineMessages({
     id: 'app.containers.LoginPage.login',
     defaultMessage: 'Login',
   },
+  loggedIn: {
+    id: 'app.containers.LoginPage.loggedIn',
+    defaultMessage: 'You are logged in.',
+  },
 });

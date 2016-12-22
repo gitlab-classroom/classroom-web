@@ -6,7 +6,7 @@ const { actions, reducer, sagas } = define('data/', {
 }, {
 
   login: {
-    request: (action) => api.post('/session', {
+    request: (action) => api.get('/session/login', {
       username: action.data.username,
       password: action.data.password,
     }),

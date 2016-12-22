@@ -4,12 +4,17 @@
  *
  */
 
-import {
-  DEFAULT_ACTION,
-} from './constants';
+import define from '../../utils/defineActionReducerSagas';
+import api from '../../utils/api';
 
-export function defaultAction() {
-  return {
-    type: DEFAULT_ACTION,
-  };
-}
+const { actions, reducer, sagas } = define('loginPage/', {
+  token: '',
+}, {
+
+  testLogin: {
+    request: () => api.get('/users/me'),
+  },
+
+});
+
+export { actions, reducer, sagas };

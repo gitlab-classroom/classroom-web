@@ -18,6 +18,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import { setAppbar } from '../Header/actions';
 import { actions as sessionActions } from '../../apis/session';
+import { actions as loginPageActions } from './actions';
 
 import Img from '../../components/Img';
 import LogoImg from './logo.png';
@@ -66,6 +67,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
   static propTypes = {
     setAppbar: React.PropTypes.func,
     login: React.PropTypes.func,
+    testLogin: React.PropTypes.func,
   }
 
   state = {
@@ -77,6 +79,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
     this.props.setAppbar({
       hide: true,
     });
+    this.props.testLogin();
   }
 
   handleUsernameChanged = (event) => {
@@ -136,6 +139,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setAppbar,
     login: sessionActions.login,
+    testLogin: loginPageActions.testLogin,
   }, dispatch);
 }
 

@@ -10,7 +10,11 @@ function handleResponse(rsp) {
     if (rsp.ok) {
       rsp.json().then(resolve).catch(handleError);
     } else {
-      rsp.text().then(handleError).catch(handleError);
+      try {
+        rsp.json().then(handleError).catch(handleError);
+      } catch (e) {
+        rsp.text().then(handleError).catch(handleError);
+      }
     }
   });
 }
@@ -27,6 +31,7 @@ function request(method, url, params = {}, body) {
   return fetch(basePath + url + getParam(params), {
     method,
     body,
+    credentials: 'same-origin',
     timeout: 500,
   }).then(handleResponse);
 }

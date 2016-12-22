@@ -16,9 +16,7 @@ import messages from './messages';
 import { setAppbar } from '../Header/actions';
 import ClassCard from '../../components/ClassCard';
 
-import {
-  // pink300, lightBlue300, teal300, teal200, cyan200,
-          pink300, amber400, blue400, cyan400 } from 'material-ui/styles/colors';
+import { pink300, amber400, blue400, cyan400 } from 'material-ui/styles/colors';
 
 
 export class ClassesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -45,8 +43,9 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
     const classCards = [];
     for (let i = 0; i < 24; i += 1) {
       const selectedColor = colors[i % colors.length];
-      classCards.push(<ClassCard headerColor={selectedColor} />);
+      classCards.push(<ClassCard headerColor={selectedColor} key={i} />);
     }
+
     return (
       <div>
         <Helmet

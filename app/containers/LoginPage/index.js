@@ -46,6 +46,7 @@ const HeaderMessage = styled.h1`
 const LoginContainer = styled(Paper)`
   width: 354px;
   padding: 40px;
+  margin-bottom: 80px;
   background-color: #f7f7f7;
   text-align: center;
   align-self: center;

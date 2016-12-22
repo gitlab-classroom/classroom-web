@@ -120,7 +120,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/assignments',
+      path: '/class/:classId',
       name: 'assignmentListPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

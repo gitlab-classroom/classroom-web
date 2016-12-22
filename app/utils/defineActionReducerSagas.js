@@ -91,7 +91,7 @@ export default function define(prefix, initialState, handlers) {
     function* asyncCall(action) {
       try {
         const data = yield call(request, action);
-        yield put({ type: SUCCESS_TYPE, data });
+        yield put({ type: SUCCESS_TYPE, data, requestData: action.data });
       } catch (error) {
         // eslint-disable-next-line no-console
         console.log(error);

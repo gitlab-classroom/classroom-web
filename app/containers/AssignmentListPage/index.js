@@ -9,139 +9,87 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import selectAssignmentListPage from './selectors';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { setAppbar } from '../Header/actions';
+import { actions as classActions } from '../../apis/class';
+import describeDeadline from '../../utils/describeDeadline';
 
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn }
-  from 'material-ui/Table';
+import {
+  Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
+} from 'material-ui/Table';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
-const tableData = [
-  {
-    name: 'Team Building',
-    status: 'Expired',
-    git: 'https://',
-    action: 'Copy Git Address',
-    primary: true,
-    secondary: false,
-    selected: true,
-  },
-  {
-    name: 'Requirement Analysis',
-    status: 'In Progress',
-    git: 'https://',
-    action: 'Copy Git Address',
-    primary: true,
-    secondary: false,
-  },
-  {
-    name: 'Meeting',
-    status: 'In Progress',
-    git: 'https://',
-    action: 'Copy Git Address',
-    primary: true,
-    secondary: false,
-    selected: true,
-  },
-  {
-    name: 'Presentation',
-    status: 'In Progress',
-    git: 'https://',
-    action: 'Copy Git Address',
-    primary: true,
-    secondary: false,
-  },
-];
+const ClassesContainer = styled.div`
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+`;
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const PlusButton = styled(RaisedButton)`
+  margin: 16px;
+`;
+const OperationContainer = styled(TableRowColumn)`
+  display: flex;
+  align-items: center;
+`;
 
 
 export class AssignmentListPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    getOneInfo: React.PropTypes.func,
+    classTitle: React.PropTypes.string,
     setAppbar: React.PropTypes.func,
-  }
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      fixedHeader: true,
-      fixedFooter: true,
-      stripedRows: false,
-      showRowHover: false,
-      selectable: true,
-      multiSelectable: false,
-      enableSelectAll: false,
-      deselectOnClickaway: true,
-      showCheckboxes: true,
-      height: '300px',
-    };
+    getAssignments: React.PropTypes.func,
+    assignments: React.PropTypes.arrayOf(React.PropTypes.object),
+    routeParams: React.PropTypes.object,
   }
 
   componentDidMount() {
     this.props.setAppbar({
-      title: <FormattedMessage {...messages.header} />,
+      title: (<span>
+        <FormattedMessage {...messages.header} />
+        {this.props.classTitle}
+      </span>),
     });
+    const { classId } = this.props.routeParams;
+    this.props.getAssignments(classId);
+    this.props.getOneInfo(classId);
   }
 
-  handleToggle = (event, toggled) => {
-    this.setState({
-      [event.target.name]: toggled,
-    });
-  };
-
-  handleChange = (event) => {
-    this.setState({ height: event.target.value });
-  };
+  componentWillReceiveProps(props) {
+    if (props.classTitle !== this.props.classTitle) {
+      this.props.setAppbar({
+        title: (
+          <span>
+            <FormattedMessage {...messages.header} />
+            {props.classTitle}
+          </span>
+        ),
+      });
+    }
+  }
 
   render() {
-    const ClassesContainer = styled.div`
-      width: 100%;
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-    `;
-
-    const HeaderContainer = styled.div`
-      display: flex;
-      justify-content: space-between;
-    `;
-    const PlusButton = styled(RaisedButton)`
-      margin: 16px;
-    `;
-    const OperationContainer = styled.div`
-      display: flex;
-      align-items: stretch;
-      height: 50px;
-      padding-top: 12px;
-    `;
-
+    const tableData = this.props.assignments;
 
     return (
       <div>
         <Helmet
           title="Assignments"
-          meta={[
-            { name: 'description', content: 'Description of AssignmentListPage' },
-          ]}
         />
         <ClassesContainer>
           <div>
-            <Table
-              height={this.state.height}
-              fixedHeader={this.state.fixedHeader}
-              fixedFooter={this.state.fixedFooter}
-              selectable={this.state.selectable}
-              multiSelectable={this.state.multiSelectable}
-            >
-              <TableHeader
-                displaySelectAll={this.state.showCheckboxes}
-                adjustForCheckbox={this.state.showCheckboxes}
-                enableSelectAll={this.state.enableSelectAll}
-              >
+            <Table fixedHeader>
+              <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                 <TableRow>
-                  <TableHeaderColumn colSpan="3" tooltip="Super Header">
+                  <TableHeaderColumn colSpan="3">
                     <HeaderContainer>
                       <h1>Assignments</h1>
                       <PlusButton label="Create" primary />
@@ -150,22 +98,17 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
                 </TableRow>
                 <TableRow>
                   <TableHeaderColumn>Name</TableHeaderColumn>
-                  <TableHeaderColumn>Status</TableHeaderColumn>
-                  <TableHeaderColumn>Action</TableHeaderColumn>
+                  <TableHeaderColumn>Deadline</TableHeaderColumn>
+                  <TableHeaderColumn style={{ paddingLeft: 42 }}>Action</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
-              <TableBody
-                displayRowCheckbox={this.state.showCheckboxes}
-                deselectOnClickaway={this.state.deselectOnClickaway}
-                showRowHover={this.state.showRowHover}
-                stripedRows={this.state.stripedRows}
-              >
+              <TableBody displayRowCheckbox={false} stripedRows>
                 {tableData.map((row, index) => (
-                  <TableRow key={index} selected={row.selected}>
+                  <TableRow key={index} selectable={false}>
                     <TableRowColumn>{row.name}</TableRowColumn>
-                    <TableRowColumn>{row.status}</TableRowColumn>
+                    <TableRowColumn>{describeDeadline(row.deadline)}</TableRowColumn>
                     <OperationContainer>
-                      <FlatButton label={row.action} primary={row.primary} secondary={row.secondary}></FlatButton>
+                      <FlatButton label="copy git repo url" primary />
                     </OperationContainer>
                   </TableRow>
                 ))}
@@ -178,11 +121,31 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
   }
 }
 
-const mapStateToProps = selectAssignmentListPage();
+const mapStateToProps = (state, ownProps) => {
+  const { classId } = ownProps.routeParams;
+  const classObj = state.getIn(['class', classId]);
+  if (!classObj) {
+    return { className: '', assignments: [] };
+  }
+  const classTitle = `${classObj.get('semester')} ${classObj.get('name')}`;
+  const role = classObj.get('role');
+  const assignmentIds = classObj.get('assignmentIds');
+  if (!assignmentIds) {
+    return { classTitle, role, assignments: [] };
+  }
+  const assignmentLists = state.get('assignment');
+  const assignments = assignmentIds.map((aid) => {
+    const t = assignmentLists.get(aid);
+    return t ? t.toJS() : {};
+  });
+  return { classTitle, role, assignments };
+};
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setAppbar,
+    getAssignments: classActions.getAssignments,
+    getOneInfo: classActions.getOneInfo,
   }, dispatch);
 }
 

@@ -47,7 +47,8 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
     Object.keys(this.props.classList).forEach((id, idx) => {
       const selectedColor = colors[idx % colors.length];
       classCards.push(<ClassCard
-        headerColor={selectedColor} key={idx}
+        key={idx}
+        headerColor={selectedColor}
         {...this.props.classList[id]}
       />);
     });

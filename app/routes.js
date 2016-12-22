@@ -8,6 +8,7 @@ import errorIndicatorSagas from './containers/ErrorIndicator/sagas';
 import apiSagas from './apis/apiSagas';
 import { reducer as sessionReducer } from './apis/session';
 import { reducer as classReducer } from './apis/class';
+import { reducer as assignmentReducer } from './apis/assignment';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -25,6 +26,7 @@ export default function createRoutes(store) {
   injectSagas(apiSagas);
   injectReducer('session', sessionReducer);
   injectReducer('class', classReducer);
+  injectReducer('assignment', assignmentReducer);
 
   return [
     {
@@ -98,7 +100,7 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/assignment',
+      path: '/assignment/:assignmentId',
       name: 'assignmentPage',
       getComponent(nextState, cb) {
         const importModules = Promise.all([

@@ -8,6 +8,11 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.AssignmentPage.header',
-    defaultMessage: 'Project',
+    defaultMessage: 'Project Assignment',
+  },
+
+  loading: {
+    id: 'app.containers.AssignmentPage.loading',
+    defaultMessage: 'Loading...',
   },
 });

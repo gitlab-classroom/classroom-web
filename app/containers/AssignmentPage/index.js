@@ -9,24 +9,30 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import selectAssignmentPage from './selectors';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import { Card, CardActions, CardTitle, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { setAppbar } from '../Header/actions';
+import { actions as assignmentActions } from '../../apis/assignment';
+
+import describeDeadline from '../../utils/describeDeadline';
 
 export class AssignmentPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   static propTypes = {
     setAppbar: React.PropTypes.func,
+    getAssignment: React.PropTypes.func,
+    routeParams: React.PropTypes.object,
+    assignment: React.PropTypes.object,
   }
 
   componentDidMount() {
     this.props.setAppbar({
       title: <FormattedMessage {...messages.header} />,
     });
+    this.props.getAssignment(this.props.routeParams.assignmentId);
   }
 
   render() {
@@ -36,32 +42,28 @@ export class AssignmentPage extends React.Component { // eslint-disable-line rea
       display: flex;
       flex-wrap: wrap;
     `;
-    const CardExampleWithAvatar = () => (
-      <Card>
-        <CardTitle title="Requirement Analyst" subtitle="Deadline:12/26.2016" />
+    const StyledCard = styled(Card)`
+      width: 100%;
+    `;
+    const assignment = this.props.assignment;
+    const CardExampleWithAvatar = assignment ? (
+      <StyledCard>
+        <CardTitle
+          title={assignment.name_with_namespace}
+          subtitle={describeDeadline(assignment.deadline)}
+        />
         <CardText>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+          {assignment.description}
         </CardText>
         <CardActions style={{ float: 'right' }}>
           <RaisedButton label="Edit" primary style={style} />
           <RaisedButton label="Publish" primary style={style} />
         </CardActions>
-      </Card>
+      </StyledCard>
+    ) : (
+      <StyledCard>
+        <CardTitle title={<FormattedMessage {...messages.loading} />} />
+      </StyledCard>
     );
     return (
       <div>
@@ -72,14 +74,21 @@ export class AssignmentPage extends React.Component { // eslint-disable-line rea
           ]}
         />
         <AssignmentContainer>
-          <CardExampleWithAvatar />
+          {CardExampleWithAvatar}
         </AssignmentContainer>
       </div>
     );
   }
 }
 
-const mapStateToProps = selectAssignmentPage();
+const mapStateToProps = (state, ownProps) => {
+  let id = ownProps.routeParams.assignmentId;
+  id = parseInt(id, 10);
+  const assignment = state.getIn(['assignment', id]);
+  return {
+    assignment,
+  };
+};
 
 const style = {
   margin: 15,
@@ -88,6 +97,7 @@ const style = {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setAppbar,
+    getAssignment: assignmentActions.getAssignment,
   }, dispatch);
 }
 

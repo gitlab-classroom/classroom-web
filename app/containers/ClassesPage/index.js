@@ -16,7 +16,14 @@ import messages from './messages';
 import { setAppbar } from '../Header/actions';
 import ClassCard from '../../components/ClassCard';
 
-import { cyan500 } from 'material-ui/styles/colors';
+import { cyan500, amber50 } from 'material-ui/styles/colors';
+
+const ClassesContainer = styled.div`
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+`;
 
 
 export class ClassesPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -32,12 +39,6 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
   }
 
   render() {
-    const ClassesContainer = styled.div`
-      width: 100%;
-      margin-top: 16px;
-      display: flex;
-      flex-wrap: wrap;
-    `;
     return (
       <div>
         <Helmet
@@ -64,7 +65,7 @@ export class ClassesPage extends React.Component { // eslint-disable-line react/
           <ClassCard headerColor={cyan500} />
           <ClassCard headerColor={cyan500} />
           <ClassCard headerColor={cyan500} />
-          <ClassCard headerColor={cyan500} />
+          <ClassCard headerColor={amber50} />
           <ClassCard headerColor={cyan500} />
           <ClassCard headerColor={cyan500} />
           <ClassCard headerColor={cyan500} />

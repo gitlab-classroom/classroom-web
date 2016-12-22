@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import selectLoginPage from './selectors';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router';
 import messages from './messages';
 
 import Paper from 'material-ui/Paper';
@@ -18,6 +17,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { setAppbar } from '../Header/actions';
+import { actions as sessionActions } from '../../apis/session';
 
 import Img from '../../components/Img';
 import LogoImg from './logo.png';
@@ -64,11 +64,37 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
 
   static propTypes = {
     setAppbar: React.PropTypes.func,
+    login: React.PropTypes.func,
+  }
+
+  state = {
+    username: '',
+    password: '',
   }
 
   componentDidMount() {
     this.props.setAppbar({
       hide: true,
+    });
+  }
+
+  handleUsernameChanged = (event) => {
+    this.setState({
+      username: event.target.value,
+    });
+  }
+
+  handlePasswordChanged = (event) => {
+    this.setState({
+      password: event.target.value,
+    });
+  }
+
+  handleLogin = () => {
+    const { username, password } = this.state;
+    this.props.login({
+      username,
+      password,
     });
   }
 
@@ -84,15 +110,19 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
           <TextField
             floatingLabelText={<FormattedMessage {...messages.username} />}
             style={{ width: '100%' }}
+            onChange={this.handleUsernameChanged}
           />
           <TextField
             floatingLabelText={<FormattedMessage {...messages.password} />}
             type="password"
             style={{ width: '100%', marginTop: -16, marginBottom: 16 }}
+            onChange={this.handlePasswordChanged}
           />
-          <Link to="/classes">
-            <RaisedButton primary label={<FormattedMessage {...messages.login} />} />
-          </Link>
+          <RaisedButton
+            primary
+            label={<FormattedMessage {...messages.login} />}
+            onTouchTap={this.handleLogin}
+          />
         </LoginContainer>
       </PageContainer>
     );
@@ -104,6 +134,7 @@ const mapStateToProps = selectLoginPage();
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     setAppbar,
+    login: sessionActions.login,
   }, dispatch);
 }
 

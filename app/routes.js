@@ -4,6 +4,9 @@
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
 
+import errorIndicatorSagas from './containers/ErrorIndicator/sagas';
+import apiSagas from './apis/apiSagas';
+
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
 };
@@ -15,6 +18,9 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
+
+  injectSagas(errorIndicatorSagas);
+  injectSagas(apiSagas);
 
   return [
     {

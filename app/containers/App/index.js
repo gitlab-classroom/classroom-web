@@ -12,6 +12,8 @@ import styled from 'styled-components';
 
 import Header from '../Header';
 
+import ErrorIndicator from '../ErrorIndicator';
+
 const AppWrapper = styled.div`
   max-width: calc(960px + 16px * 2);
   margin: 64px auto 0 auto;
@@ -35,6 +37,7 @@ function App(props) {
         />
         {React.Children.toArray(props.children)}
       </AppWrapper>
+      <ErrorIndicator />
     </div>
   );
 }

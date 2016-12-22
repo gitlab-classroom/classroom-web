@@ -15,7 +15,10 @@ function* catchFailedActions() {
         yield put(actions.open(<FormattedMessage {...messages.loginRequired} />));
         continue;
       }
-      if (action.error.error && action.error.error.failedValidation) {
+      if (action.error.error && action.error.error.message ===
+          'Request validation failed: Parameter (Cookie) is required') {
+        browserHistory.push('/login');
+        yield put(actions.open(<FormattedMessage {...messages.loginRequired} />));
         continue;
       }
       yield put(actions.open(<FormattedMessage {...messages.serverError} />));

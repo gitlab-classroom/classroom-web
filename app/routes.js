@@ -6,6 +6,8 @@ import { getAsyncInjectors } from './utils/asyncInjectors';
 
 import errorIndicatorSagas from './containers/ErrorIndicator/sagas';
 import apiSagas from './apis/apiSagas';
+import { reducer as sessionReducer } from './apis/session';
+import { reducer as classReducer } from './apis/class';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -21,6 +23,8 @@ export default function createRoutes(store) {
 
   injectSagas(errorIndicatorSagas);
   injectSagas(apiSagas);
+  injectReducer('session', sessionReducer);
+  injectReducer('class', classReducer);
 
   return [
     {

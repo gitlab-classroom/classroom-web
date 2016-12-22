@@ -12,6 +12,7 @@ function* handleLoggedIn() {
   browserHistory.push('/classes');
   yield put(errorIndicatorActions.open(<FormattedMessage {...messages.loggedIn} />));
 }
+
 export function* handleLogin() {
   while (1) {
     yield take(sessionActions.loginSuccess.type);

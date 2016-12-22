@@ -17,7 +17,6 @@ const StyledCard = styled(Paper)`
   flex-direction: column;
 `;
 
-
 const CourseHeader = styled.h3`
     width: 100%;
     margin-top: 30px;
@@ -41,7 +40,13 @@ const AssignmentInfo = styled.p`
   font-size: 60%;
 `;
 
-function ClassCard({ headerColor }) {
+function nameParser(name) {
+  return name.split('').map(
+    (ch) => (ch === ch.toUpperCase() ? ' '.concat(ch) : ch)
+  ).join('');
+}
+
+function ClassCard({ headerColor, name, semester, description }) {
   const CardHeader = styled.div`
     width: 100%;
     height: 120px;
@@ -51,16 +56,19 @@ function ClassCard({ headerColor }) {
   return (
     <StyledCard zDepth={2} >
       <CardHeader>
-        <CourseHeader> Project Management </CourseHeader>
-        <StudentInfo> 20 Students </StudentInfo>
+        <CourseHeader>{nameParser(name)}</CourseHeader>
+        <StudentInfo>{semester}</StudentInfo>
       </CardHeader>
-      <AssignmentInfo>1 Assignment</AssignmentInfo>
+      <AssignmentInfo>{description}</AssignmentInfo>
     </StyledCard>
   );
 }
 
 ClassCard.propTypes = {
   headerColor: React.PropTypes.string,
+  name: React.PropTypes.string,
+  semester: React.PropTypes.string,
+  description: React.PropTypes.string,
 };
 
 export default ClassCard;

@@ -21,19 +21,11 @@ import { actions as sessionActions } from '../../apis/session';
 import { actions as loginPageActions } from './actions';
 
 import Img from '../../components/Img';
-import LogoImg from './logo.png';
 import AvatarImg from '../../avatar.jpg';
 
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledLogo = styled(Img)`
-  width: 64px;
-  height: 64px;
-  align-self: center;
-  margin-top: 8px;
 `;
 
 const HeaderMessage = styled.h1`
@@ -105,7 +97,6 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
   render() {
     return (
       <PageContainer>
-        <StyledLogo src={LogoImg} alt="GitLab Classroom" />
         <HeaderMessage>
           <FormattedMessage {...messages.header} />
         </HeaderMessage>

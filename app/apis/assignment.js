@@ -15,6 +15,14 @@ const { actions, reducer, sagas } = define('assignment/', {
     return state.merge(newAssignments);
   },
 
+  newAssignment: {
+    request: (action) => api.post(`/classes/${action.data.id}/assignments`, {}, {
+      name: action.data.name,
+      description: action.data.description,
+      deadline: action.data.deadline.toISOString(),
+    }),
+  },
+
 });
 
 export { actions, reducer, sagas };

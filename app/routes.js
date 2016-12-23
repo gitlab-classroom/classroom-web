@@ -140,6 +140,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/class/:classId/new_assignment',
+      name: 'newAssignmentPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/NewAssignmentPage/reducer'),
+          System.import('containers/NewAssignmentPage/sagas'),
+          System.import('containers/NewAssignmentPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('newAssignmentPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

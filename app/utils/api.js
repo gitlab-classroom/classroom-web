@@ -28,12 +28,18 @@ function getParam(params) {
 }
 
 function request(method, url, params = {}, body) {
-  return fetch(basePath + url + getParam(params), {
+  const p = {
     method,
-    body,
     credentials: 'same-origin',
     timeout: 500,
-  }).then(handleResponse);
+  };
+  if (body) {
+    p.headers = {
+      'Content-Type': 'application/json',
+    };
+    p.body = JSON.stringify(body);
+  }
+  return fetch(basePath + url + getParam(params), p).then(handleResponse);
 }
 
 export default {

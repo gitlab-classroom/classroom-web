@@ -15,6 +15,7 @@ const AppBarContainer = styled.div`
   left: 0;
   top: 0;
   right: 0;
+  zIndex: 10;
 `;
 
 export class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function

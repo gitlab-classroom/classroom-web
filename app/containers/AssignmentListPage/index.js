@@ -14,6 +14,7 @@ import messages from './messages';
 import { setAppbar } from '../Header/actions';
 import { actions as classActions } from '../../apis/class';
 import describeDeadline from '../../utils/describeDeadline';
+import { Link, browserHistory } from 'react-router';
 
 import {
   Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
@@ -43,6 +44,7 @@ const OperationContainer = styled(TableRowColumn)`
 
 export class AssignmentListPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
+    role: React.PropTypes.string,
     getOneInfo: React.PropTypes.func,
     classTitle: React.PropTypes.string,
     setAppbar: React.PropTypes.func,
@@ -78,6 +80,8 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
 
   render() {
     const tableData = this.props.assignments;
+    const { role } = this.props;
+    console.log(tableData);
 
     return (
       <div>
@@ -92,7 +96,17 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
                   <TableHeaderColumn colSpan="3">
                     <HeaderContainer>
                       <h1>Assignments</h1>
-                      <PlusButton label="Create" primary />
+                      {
+                        role === 'teacher'
+                          ? <PlusButton
+                            label="Create"
+                            primary
+                            onTouchTap={
+                              () => browserHistory.push(`/class/${this.props.routeParams.classId}/new_assignment`)
+                            }
+                          />
+                          : null
+                      }
                     </HeaderContainer>
                   </TableHeaderColumn>
                 </TableRow>
@@ -104,11 +118,18 @@ export class AssignmentListPage extends React.Component { // eslint-disable-line
               </TableHeader>
               <TableBody displayRowCheckbox={false} stripedRows>
                 {tableData.map((row, index) => (
-                  <TableRow key={index} selectable={false}>
-                    <TableRowColumn>{row.name}</TableRowColumn>
+                  <TableRow
+                    key={index}
+                    selectable={false}
+                  >
+                    <TableRowColumn><Link to={`/assignment/${row.id}`}>{row.name}</Link></TableRowColumn>
                     <TableRowColumn>{describeDeadline(row.deadline)}</TableRowColumn>
                     <OperationContainer>
-                      <FlatButton label="copy git repo url" primary />
+                      {
+                        role === 'student' && !row.forked
+                          ? <FlatButton label="copy git repo url" primary />
+                          : <FlatButton label="copy git repo url" primary />
+                      }
                     </OperationContainer>
                   </TableRow>
                 ))}
